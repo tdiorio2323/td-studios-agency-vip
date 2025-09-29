@@ -1,11 +1,17 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { FrostButton, GhostButton, MiniFrost, MiniGhost } from './ui/Button';
 import { GlassCard } from './ui/GlassCard';
 
 export default function AgencyLanding() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const router = useRouter();
+
+  const handleContactClick = () => {
+    router.push('/contact');
+  };
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-black text-white">
       {/* Backdrop gradient / liquid glass blobs */}
@@ -31,10 +37,10 @@ export default function AgencyLanding() {
           </div>
 
           <nav className="hidden items-center gap-6 text-sm text-text-secondary md:flex">
-            <a className="nav-link focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded-md px-2 py-1" tabIndex={0}>Features</a>
-            <a className="nav-link focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded-md px-2 py-1" tabIndex={0}>Showcase</a>
-            <a className="nav-link focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded-md px-2 py-1" tabIndex={0}>Pricing</a>
-            <a className="nav-link focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black rounded-md px-2 py-1" tabIndex={0}>Contact</a>
+            <button className="nav-link focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2 py-1 will-change-transform" onClick={() => {}}>Features</button>
+            <button className="nav-link focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2 py-1 will-change-transform" onClick={() => {}}>Showcase</button>
+            <button className="nav-link focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2 py-1 will-change-transform" onClick={() => {}}>Pricing</button>
+            <button className="nav-link focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2 py-1 will-change-transform" onClick={handleContactClick}>Contact</button>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -63,10 +69,10 @@ export default function AgencyLanding() {
         {isMobileNavOpen && (
           <div className="absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl border-b border-white/10 p-6 md:hidden z-30">
             <nav className="space-y-4 mb-6">
-              <a className="block text-text-secondary hover:text-text-primary transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md px-2" tabIndex={0}>Features</a>
-              <a className="block text-text-secondary hover:text-text-primary transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md px-2" tabIndex={0}>Showcase</a>
-              <a className="block text-text-secondary hover:text-text-primary transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md px-2" tabIndex={0}>Pricing</a>
-              <a className="block text-text-secondary hover:text-text-primary transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-white/50 rounded-md px-2" tabIndex={0}>Contact</a>
+              <button className="block text-text-secondary hover:text-text-primary transition-colors py-2 focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2 will-change-transform" onClick={() => {}}>Features</button>
+              <button className="block text-text-secondary hover:text-text-primary transition-colors py-2 focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2 will-change-transform" onClick={() => {}}>Showcase</button>
+              <button className="block text-text-secondary hover:text-text-primary transition-colors py-2 focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2 will-change-transform" onClick={() => {}}>Pricing</button>
+              <button className="block text-text-secondary hover:text-text-primary transition-colors py-2 focus:outline-none focus:ring-1 focus:ring-white/30 rounded px-2 will-change-transform" onClick={handleContactClick}>Contact</button>
             </nav>
             <div className="flex flex-col gap-3">
               <GhostButton aria-label="Sign into your account">Sign in</GhostButton>
@@ -180,8 +186,22 @@ export default function AgencyLanding() {
       <style jsx global>{`
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
         .animate-shimmer { animation: shimmer 6s linear infinite; }
-        .nav-link { position: relative; }
-        .nav-link::after { content: ""; position: absolute; left: 0; bottom: -6px; width: 0; height: 1px; background: rgba(255,255,255,.6); transition: width .3s; }
+        .nav-link {
+          position: relative;
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        .nav-link::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -6px;
+          width: 0;
+          height: 1px;
+          background: rgba(255,255,255,.6);
+          transition: width 0.2s ease-out;
+          will-change: width;
+        }
         .nav-link:hover::after { width: 100%; }
       `}</style>
     </div>
