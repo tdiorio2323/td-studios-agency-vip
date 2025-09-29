@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
-const CANON = process.env.NEXT_PUBLIC_CANON || 'vip.tdstudiosny.co'
+const CANON = process.env.NEXT_PUBLIC_CANON || 'vip.tdstudiosny.com'
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get('host') || ''
