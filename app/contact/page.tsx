@@ -5,21 +5,37 @@ import Link from 'next/link'
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus('idle')
 
-    // Add Formspree integration here
-    // const formData = new FormData(e.currentTarget)
-    // await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-    //   method: 'POST',
-    //   body: formData
-    // })
+    try {
+      const formData = new FormData(e.currentTarget)
 
-    setTimeout(() => {
+      const response = await fetch('https://formspree.io/f/mwprljle', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        // Reset form
+        e.currentTarget.reset()
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitStatus('error')
+    } finally {
       setIsSubmitting(false)
-    }, 2000)
+    }
   }
 
   return (
@@ -69,7 +85,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">Email</h3>
-                    <p className="text-white/70">hello@tdstudiosny.com</p>
+                    <p className="text-white/70">tyler@tdstudiosny.com</p>
                   </div>
                 </div>
 
@@ -127,6 +143,40 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
               <h2 className="text-2xl font-semibold mb-6">Send us a Message</h2>
+
+              {/* Success Message */}
+              {submitStatus === 'success' && (
+                <div className="p-4 rounded-lg border border-green-500/20 bg-green-500/10 backdrop-blur">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-8 items-center justify-center rounded-full border border-green-500/30 bg-green-500/20">
+                      <svg className="size-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-green-400">Message Sent!</h3>
+                      <p className="text-sm text-green-300/80">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {submitStatus === 'error' && (
+                <div className="p-4 rounded-lg border border-red-500/20 bg-red-500/10 backdrop-blur">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-8 items-center justify-center rounded-full border border-red-500/30 bg-red-500/20">
+                      <svg className="size-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-red-400">Message Failed</h3>
+                      <p className="text-sm text-red-300/80">Sorry, there was an error sending your message. Please try again or email us directly.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
