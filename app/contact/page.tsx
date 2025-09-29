@@ -1,11 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -13,6 +15,14 @@ export default function ContactPage() {
     setSubmitStatus('idle')
 
     try {
+      // @ts-ignore – easy access
+      if ((e.currentTarget as any)['company_website']?.value) {
+        // bot likely; short-circuit "success" silently
+        setSubmitStatus('success')
+        e.currentTarget.reset()
+        return
+      }
+
       const formData = new FormData(e.currentTarget)
 
       const response = await fetch('https://formspree.io/f/mwprljle', {
@@ -27,6 +37,8 @@ export default function ContactPage() {
         setSubmitStatus('success')
         // Reset form
         e.currentTarget.reset()
+        // Redirect to success page
+        setTimeout(() => router.push('/contact/success'), 1000)
       } else {
         setSubmitStatus('error')
       }
@@ -286,6 +298,16 @@ export default function ContactPage() {
                     placeholder="Tell us about your project, goals, and timeline..."
                   />
                 </div>
+
+                {/* Honeypot field - hidden from users, catches bots */}
+                <input
+                  type="text"
+                  name="company_website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
 
                 <button
                   type="submit"
