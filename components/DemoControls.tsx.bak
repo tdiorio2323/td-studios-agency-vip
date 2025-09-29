@@ -95,7 +95,11 @@ export function DemoControls({ className = '' }: DemoControlsProps) {
             </h3>
 
             <div className="flex items-center space-x-3 mb-4">
-              <FrostButton onClick={handlePlayPause}>
+              <FrostButton
+               
+               
+                onClick={handlePlayPause}
+              >
                 {demoState === 'playing' ? (
                   <Pause className="w-4 h-4" />
                 ) : (

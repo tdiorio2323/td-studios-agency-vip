@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_OaZCajPSBMZX43iSiPB08ZCTWFWw",
+  "orgId": "team_0cl7wVSctAieZKXqKR2eyB02",
+  "projectName": "td-agency-ui-dropin",
+  "settings": {
+    "createdAt": 1759162255872,
+    "framework": "nextjs",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "22.x"
+  }
+}
