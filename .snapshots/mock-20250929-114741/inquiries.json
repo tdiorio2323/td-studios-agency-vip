@@ -1,0 +1,35 @@
+[
+  {
+    "id": "inq-1",
+    "creator_id": "c-jessica",
+    "sender": "BeautyCo Partnerships <brand@beautyco.com>",
+    "sender_email": "brand@beautyco.com",
+    "subject": "UGC + Reel for Spring Drop",
+    "body": "Hi Jessica — we love your aesthetic. Budget $3,500 for a reel + 3 stories. Timeline 2 weeks. Net 15.",
+    "classification": "serious",
+    "status": "new",
+    "created_at": "2025-09-28T00:00:00Z"
+  },
+  {
+    "id": "inq-2",
+    "creator_id": "c-jessica",
+    "sender": "Luxury Swim <press@luxswim.co>",
+    "sender_email": "press@luxswim.co",
+    "subject": "Story + Link collab",
+    "body": "2-3 posts, $1,200 flat + affiliate 10%. Timeline: next month.",
+    "classification": "serious",
+    "status": "new",
+    "created_at": "2025-09-27T00:00:00Z"
+  },
+  {
+    "id": "inq-3",
+    "creator_id": "c-jessica",
+    "sender": "random <promo@gmail.com>",
+    "sender_email": "promo@gmail.com",
+    "subject": "Like for like?",
+    "body": "We can trade shoutouts",
+    "classification": "spam",
+    "status": "new",
+    "created_at": "2025-09-26T00:00:00Z"
+  }
+]

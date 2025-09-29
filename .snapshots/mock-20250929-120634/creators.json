@@ -1,0 +1,13 @@
+[
+  {
+    "id": "c-jessica",
+    "name": "Jessica",
+    "handle": "@jessica",
+    "email": "jessica@tdstudiosagency.com",
+    "filters": {
+      "minBudget": 1000,
+      "requiredKeywords": ["budget","timeline"],
+      "blockedDomains": ["gmail.com","yahoo.com"]
+    }
+  }
+]
