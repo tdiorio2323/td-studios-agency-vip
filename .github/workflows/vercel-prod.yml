@@ -1,0 +1,23 @@
+name: Production (Vercel)
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Install deps
+        run: npm ci || npm i
+      - name: Vercel pull (prod)
+        run: npx vercel pull --yes --environment=production --token ${{ secrets.VERCEL_TOKEN }}
+      - name: Build (prebuilt)
+        run: npx vercel build --prod --token ${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Production
+        run: npx vercel deploy --prebuilt --prod --token ${{ secrets.VERCEL_TOKEN }}
