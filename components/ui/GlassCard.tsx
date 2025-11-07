@@ -44,26 +44,33 @@ export function GlassCard({
 
   return (
     <Component
-      whileHover={hover ? { y: -4, scale: 1.02 } : undefined}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      whileHover={hover ? { y: -2, scale: 1.005 } : undefined}
+      transition={{ type: 'spring', stiffness: 400, damping: 35 }}
       className={cn(
-        'relative overflow-hidden rounded-2xl',
+        'group relative overflow-hidden rounded-2xl',
         blurVariants[blur],
         sizeVariants[size],
-        'bg-white/10',
-        border && 'border border-white/20',
-        'shadow-glass',
-        hover && 'hover:bg-white/15 hover:border-white/30',
-        'transition-all duration-300',
-        gradient && 'before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:pointer-events-none',
-        onClick && 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black',
+        // Enhanced glass effect with better layering
+        'bg-gradient-to-br from-white/[0.12] to-white/[0.06]',
+        // Gradient border effect
+        border && 'before:absolute before:inset-0 before:rounded-2xl before:p-[1px] before:bg-gradient-to-br before:from-white/25 before:via-white/10 before:to-white/5 before:-z-10',
+        // Inner shadow for depth
+        'shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.15),0_8px_32px_0_rgba(0,0,0,0.4)]',
+        hover && 'hover:shadow-[inset_0_1px_2px_0_rgba(255,255,255,0.2),0_12px_48px_0_rgba(0,0,0,0.5)]',
+        'transition-all duration-500 ease-out',
+        gradient && 'after:absolute after:inset-0 after:bg-gradient-to-br after:from-white/[0.08] after:to-transparent after:pointer-events-none after:opacity-0 after:group-hover:opacity-100 after:transition-opacity after:duration-500',
+        onClick && 'cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-black/50',
         className
       )}
       onClick={onClick}
       aria-label={ariaLabel}
     >
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 -translate-x-full hover:translate-x-full transition-transform duration-1000" />
+      {/* Refined shimmer - only on hover, more subtle */}
+      {hover && (
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-out" />
+        </div>
+      )}
 
       {/* Content */}
       <div className="relative z-10">

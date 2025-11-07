@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* === Inter Font Import === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 /* === TD Studios — Design Tokens === */
 :root{
   --ink:#0B0B0C;
@@ -12,10 +15,24 @@
   --glass-border: rgba(255,255,255,0.12);
 }
 
-/* Base */
+/* Base with font optimization */
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+}
+
 html, body {
   @apply bg-black text-white antialiased;
   background-color: var(--ink);
+}
+
+/* Typography refinement */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 /* Glass card utility (use with Tailwind classes) */
@@ -52,15 +69,31 @@ html, body {
     radial-gradient(40% 30% at 20% 20%, rgba(255,200,100,0.12), transparent 60%),
     radial-gradient(35% 35% at 80% 30%, rgba(140,120,255,0.14), transparent 60%),
     radial-gradient(30% 40% at 60% 80%, rgba(0,200,255,0.14), transparent 60%);
-  animation: floatBlobs 28s ease-in-out infinite alternate;
+  animation: floatBlobs 35s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
   filter: blur(32px) saturate(120%);
   mix-blend-mode: screen;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @keyframes floatBlobs{
-  0%   { transform: translate3d(0,0,0) scale(1); }
-  50%  { transform: translate3d(-2%, -1%, 0) scale(1.03); }
-  100% { transform: translate3d(2%, 1%, 0) scale(1.06); }
+  0%   {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.6;
+  }
+  33%  {
+    transform: translate3d(-2%, -3%, 0) scale(1.05) rotate(2deg);
+    opacity: 0.7;
+  }
+  66%  {
+    transform: translate3d(3%, 1%, 0) scale(1.08) rotate(-2deg);
+    opacity: 0.65;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.6;
+  }
 }
 
 /* Shimmer sweep (ultra subtle, top-to-bottom) */
@@ -74,15 +107,26 @@ html, body {
       rgba(255,255,255,0) 55%
     );
   background-size: 200% 200%;
-  animation: sweep 12s linear infinite;
+  animation: sweep 18s ease-in-out infinite;
   opacity: .18;
   mix-blend-mode: screen;
   filter: blur(24px);
+  will-change: background-position, opacity;
+  transform: translateZ(0);
 }
 @keyframes sweep{
-  0%   { background-position: 0% 0%;   }
-  50%  { background-position: 100% 100%;}
-  100% { background-position: 0% 0%;   }
+  0%   {
+    background-position: -200% -200%;
+    opacity: 0.12;
+  }
+  50%  {
+    background-position: 200% 200%;
+    opacity: 0.18;
+  }
+  100% {
+    background-position: -200% -200%;
+    opacity: 0.12;
+  }
 }
 
 /* Raise main app above FX */
